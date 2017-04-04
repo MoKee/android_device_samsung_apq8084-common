@@ -63,9 +63,9 @@ BOARD_CHARGING_CMDLINE_NAME := "androidboot.mode"
 BOARD_CHARGING_CMDLINE_VALUE := "charger"
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
-# CMHW
-BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
-BOARD_HARDWARE_CLASS += $(LOCAL_PATH)/cmhw
+# MKHW
+BOARD_HARDWARE_CLASS += hardware/samsung/mkhw
+BOARD_HARDWARE_CLASS += $(LOCAL_PATH)/mkhw
 
 # Display
 OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so

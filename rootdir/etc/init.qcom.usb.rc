@@ -42,12 +42,10 @@ on fs
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
 
-# This is required for lentislte starting with Android 7.1.2.  For some
-# reason, if persist.sys.usb.config isn't set explicitely here, it's set
-# to "diag,diag_mdm,serial_hsic,rmnet_qti_ether,mass_storage,adb" for no
-# visible reason.
-on early-boot
-    setprop persist.sys.usb.config adb
+service qcom-usb-sh /system/bin/sh /init.qcom.usb.sh
+    class core
+    user root
+    oneshot
 
 # Following are the parameters required for usb functionality. They provide configurable options like
 # product_id/vendor id and allows specifying required functions:
@@ -97,6 +95,16 @@ on early-boot
 # e.g. rmnet_hsic[,rmnet_hsusb]
 # Only required for transport type hsic, optional for other transport types.
 
+# Used to disable USB when switching states
+on property:sys.usb.config=none
+    stop adbd
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/bDeviceClass 0
+    setprop sys.usb.state ${sys.usb.config}
+
+# adb only USB configuration
+# This is the fallback configuration if the
+# USB manager fails to set a standard configuration
 on property:sys.usb.config=adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 04E8
@@ -124,6 +132,24 @@ on property:sys.usb.config=mtp,adb
     start adbd
     setprop sys.usb.state ${sys.usb.config}
 
+on property:sys.usb.config=charging
+    stop adbd
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 04E8
+    write /sys/class/android_usb/android0/idProduct 6860
+    write /sys/class/android_usb/android0/functions mtp
+    write /sys/class/android_usb/android0/enable 1
+    setprop sys.usb.state ${sys.usb.config}
+
+on property:sys.usb.config=charging,adb
+    stop adbd
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 04E8
+    write /sys/class/android_usb/android0/idProduct 6860
+    write /sys/class/android_usb/android0/functions mtp,adb
+    write /sys/class/android_usb/android0/enable 1
+    setprop sys.usb.state ${sys.usb.config}
+
 on property:sys.usb.config=ptp
     stop adbd
     write /sys/class/android_usb/android0/enable 0
@@ -142,6 +168,12 @@ on property:sys.usb.config=ptp,adb
     start adbd
     setprop sys.usb.state ${sys.usb.config}
 
+on property:sys.usb.config=diag,diag_mdm,serial_hsic,rmnet_qti_ether,mass_storage
+    setprop sys.usb.config none
+
+on property:sys.usb.config=diag,diag_mdm,serial_hsic,rmnet_qti_ether,mass_storage,adb
+    setprop sys.usb.config adb
+
 on property:sys.usb.config=rndis
     stop adbd
     write /sys/class/android_usb/android0/enable 0
@@ -158,15 +190,6 @@ on property:sys.usb.config=rndis,adb
     write /sys/class/android_usb/android0/functions rndis,adb
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-on property:sys.usb.config=charging
-    stop adbd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18D1
-    write /sys/class/android_usb/android0/idProduct 4EE1
-    write /sys/class/android_usb/android0/functions charging
-    write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
 
 on property:sys.usb.config=ncm

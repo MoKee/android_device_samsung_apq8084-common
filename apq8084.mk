@@ -190,7 +190,9 @@ PRODUCT_PACKAGES += \
 
 # Radio
 PRODUCT_PACKAGES += \
-    libshim_ril
+    libsecnativefeature \
+    libsecril-client-sap \
+    libsecril-client
 
 # Ramdisk
 PRODUCT_PACKAGES += \

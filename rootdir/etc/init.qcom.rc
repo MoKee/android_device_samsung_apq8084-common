@@ -30,8 +30,6 @@ import init.qcom.power.rc
 import init.trace.rc
 
 on early-init
-    export LD_SHIM_LIBS /system/lib/libril.so|libshim_ril.so
-
     setprop sys.boot_completed 0
     write /sys/block/mmcblk0/queue/scheduler noop
 
@@ -522,9 +520,6 @@ on boot
     chmod 2755 /data/misc/perfd
     mkdir /data/system/perfd 0770 root system
     chmod 2770 /data/system/perfd
-
-    #Create NETMGR daemon socket area
-    mkdir /dev/socket/netmgr 0750 radio radio
 
     setprop wifi.interface wlan0
 

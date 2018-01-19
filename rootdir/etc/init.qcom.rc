@@ -40,6 +40,8 @@ on early-init
     symlink /data/tombstones /tombstones
 
 on init
+    export LD_SHIM_LIBS /system/lib/hw/camera.vendor.apq8084.so|libshim_camera.so
+
     mkdir /efs 0771 system radio
 
     # Set permissions for persist partition
@@ -57,7 +59,6 @@ on fs
     write /sys/devices/msm_sdcc.2/mmc_host/mmc1/power/control on
 
     mount_all fstab.qcom
-    write /proc/sys/vm/swappiness 100
     swapon_all fstab.qcom
 
     # Keeping following partitions outside fstab file. As user may not have

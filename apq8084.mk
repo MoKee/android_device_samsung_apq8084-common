@@ -84,6 +84,7 @@ PRODUCT_COPY_FILES += \
 # Camera
 PRODUCT_PACKAGES += \
     camera.apq8084 \
+    libshim_camera \
     libstlport \
     libxml2
 
@@ -190,9 +191,7 @@ PRODUCT_PACKAGES += \
 
 # Radio
 PRODUCT_PACKAGES += \
-    libsecnativefeature \
-    libsecril-client-sap \
-    libsecril-client
+    libsecnativefeature
 
 # Ramdisk
 PRODUCT_PACKAGES += \

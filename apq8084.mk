@@ -23,7 +23,7 @@ $(call inherit-product-if-exists, vendor/samsung/apq8084-common/apq8084-common-v
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay-mokee
 
 ifneq ($(RR_BUILD),)
 DEVICE_PACKAGE_OVERLAYS += \
@@ -281,7 +281,7 @@ PRODUCT_COPY_FILES += \
 
 # Trust HAL
 PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
+    vendor.mokee.trust@1.0-service
 
 # USB
 PRODUCT_PACKAGES += \
@@ -289,7 +289,7 @@ PRODUCT_PACKAGES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-service.lineage
+    android.hardware.vibrator@1.0-service.mokee
 
 # Wifi
 PRODUCT_PACKAGES += \

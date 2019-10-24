@@ -205,6 +205,10 @@ PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     lights.APQ8084
 
+# LiveDisplay
+PRODUCT_PACKAGES += \
+    vendor.mokee.livedisplay@2.0-service.samsung-qcom
+
 # Media
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
@@ -278,6 +282,10 @@ PRODUCT_PACKAGES += \
 # Thermal engine
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine.conf:system/etc/thermal-engine.conf
+
+# Touch features
+PRODUCT_PACKAGES += \
+    vendor.mokee.touch@1.0-service.samsung
 
 # Trust HAL
 PRODUCT_PACKAGES += \

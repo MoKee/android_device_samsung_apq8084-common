@@ -195,8 +195,6 @@ $(shell mkdir -p $(TARGET_OUT)/etc/firmware/wcd9320; \
 	ln -sf /data/misc/audio/wcd9320_mad_audio.bin \
 		$(TARGET_OUT)/etc/firmware/wcd9320/wcd9320_mad_audio.bin)
 
-endif
-
 include $(CLEAR_VARS)
 BT_FW_FILES := \
 	nvm_tlv.bin nvm_tlv_1.3.bin nvm_tlv_2.1.bin nvm_tlv_3.0.bin \
@@ -351,3 +349,5 @@ $(QMUX_CONFIG_SYMLINK): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /system/vendor/etc/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(QMUX_CONFIG_SYMLINK)
+
+endif
